@@ -30,23 +30,22 @@ y_train = y[0: int(n_train), :].T
 y_test =  y[int(n_train):, :].T
 
 
+# Activation Functions
 def sigmoid(Z):
     """
     Compute the sigmoid of z
     """
     A = 1/(1+np.exp(-Z))
-    cache = Z
     
-    return A, cache
+    return A
 
 def relu(Z):
     """
     Implement the RELU function.
     """
     A = np.maximum(0,Z)
-    cache = Z 
 
-    return A, cache
+    return A
 
 
 def sigmoid_backward(dA, Z):
@@ -83,19 +82,21 @@ def initialize_parameters(n_x, n_h, n_y):
 
     return params
 
+
+# Forward Activation
 def linear_activation_forward(A_prev, W, b, activation_type):
     """
     Implement the forward propagation for the LINEAR->ACTIVATION layer
     """
     if activation_type == "sigmoid":
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = sigmoid(Z)
+        Z = linear_forward(A_prev, W, b)
+        A = sigmoid(Z)
 
     elif activation_type == "relu":
-        Z, linear_cache = linear_forward(A_prev, W, b)
-        A, activation_cache = relu(Z)
+        Z = linear_forward(A_prev, W, b)
+        A = relu(Z)
 
-    cache = (linear_cache, activation_cache)
+    cache = (A_prev, W, b, Z)
 
     return A, cache
 
@@ -106,33 +107,33 @@ def linear_forward(A, W, b):
     """
     
     Z = np.dot(W, A) + b
-    cache = (A, W, b)
     
-    return Z, cache
+    return Z
 
 
+
+# Backward activation
 def linear_activation_backward(dA, cache, activation_type):
     """
     Implement the backward propagation for the LINEAR->ACTIVATION layer.
     """
-    linear_cache, activation_cache = cache
+    A_prev, W, b, Z = cache
     
     if activation_type == "relu":
-        dZ = relu_backward(dA, activation_cache)
-        dA_prev, dW, db = linear_backward(dZ, linear_cache)
+        dZ = relu_backward(dA, Z)
+        dA_prev, dW, db = linear_backward(dZ, A_prev, W, b)
         
     elif activation_type == "sigmoid":
-        dZ = sigmoid_backward(dA, activation_cache)
-        dA_prev, dW, db = linear_backward(dZ, linear_cache)
+        dZ = sigmoid_backward(dA, Z)
+        dA_prev, dW, db = linear_backward(dZ, A_prev, W, b)
     
     return dA_prev, dW, db
 
 
-def linear_backward(dZ, cache):
+def linear_backward(dZ, A_prev, W, b):
     """
     Implement the linear portion of backward propagation for a single layer (layer l)
     """
-    A_prev, W, b = cache
     m = A_prev.shape[1]
 
     dW = np.dot(dZ, A_prev.T) / m
@@ -166,8 +167,9 @@ def update_parameters(parameters, grads, learning_rate):
         parameters["b" + str(l+1)] = parameters["b" + str(l + 1)] - learning_rate * grads["db" + str(l + 1)]
 
     return parameters
+    
 
-
+# Create model
 def model(X, Y, learning_rate = 0.1, num_iterations = 3000):
     np.random.seed(1)
     grads = {}
@@ -223,7 +225,7 @@ def model(X, Y, learning_rate = 0.1, num_iterations = 3000):
         if i % 100 == 0:
             accuracys.append(accuracy)
             costs.append(cost)
-       
+    
     # plot the cost
 
     plt.plot(np.squeeze(accuracys))

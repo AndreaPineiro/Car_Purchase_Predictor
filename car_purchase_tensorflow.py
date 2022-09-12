@@ -20,7 +20,7 @@ scaler = StandardScaler()
 X_trans = scaler.fit_transform(X)
 
 # Dividir en train y test
-x_train, x_test, y_train, y_test = train_test_split(X_trans, Y, test_size = 0.2)
+x_train, x_test, y_train, y_test = train_test_split(X_trans, Y, test_size = 0.2, random_state = 55)
 
 
 # MODELO INICIAL
@@ -67,9 +67,9 @@ print("Binary Accuracy Modelo 1: ", accuracy_score(y_test,y_hat))
 
 # Crear el modelo
 model2 = tf.keras.Sequential()
-model2.add(tf.keras.layers.Dense(units = 2, activation = "relu", input_dim = x_train.shape[1]))
-model2.add(tf.keras.layers.Dense(units = 3, activation = "relu"))
-model2.add(tf.keras.layers.Dense(units = 3, activation = "relu"))
+model2.add(tf.keras.layers.Dense(units = 8, activation = "relu", input_dim = x_train.shape[1]))
+model2.add(tf.keras.layers.Dense(units = 4, activation = "relu"))
+model2.add(tf.keras.layers.Dense(units = 2, activation = "relu"))
 model2.add(tf.keras.layers.Dense(units = 1, activation = "sigmoid"))
 
 # Compilar el modelo
@@ -82,7 +82,7 @@ model2.compile(
 # Entrenar el modelo
 print('MODELO 2')
 print('Inicio del entrenamiento')
-historia = model2.fit(X_trans, Y, epochs = 200, validation_split = 0.2, verbose = 2)
+historia = model2.fit(X_trans, Y, epochs = 300, validation_split = 0.2, verbose = 2)
 print("Modelo entrenado")
 
 # Graficar la pérdida

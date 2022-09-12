@@ -13,6 +13,8 @@ Uso de framework o biblioteca de aprendizaje máquina para la implementación de
 Para esta actividad se uso tensorflow como framework de aprendizaje de máquina. Se creó primero un modelo inicial, que posteriormente fue actualizado y mejorado para obtener mejores resultados.
 La API usada es *tf.keras* sirve para construir y entrenar modelos de aprendizaje profundo. 
 
+El análisis profundo entre el modelo 1 y el modelo 2 se encuentra en el archivo pdf de Análisis y Reporte sobre el desempeño del modelo.
+
 ## Modelo 1
 El modelo inicial es una red neuronal que contiene 1 capa oculta con 2 neuronas. 
 - Para la primera capa se usa la función de activación *relu*

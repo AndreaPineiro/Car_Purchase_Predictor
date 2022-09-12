@@ -22,10 +22,11 @@ El modelo usa el algoritmo *sgd* de optimización y las métricas son *BinaryCro
 Este modelo tiene aproximadamente un 0.84 de Accuracy en las pruebas realizadas.
 
 ## Modelo 2
-Para mejorar el modelo se agregó 1 capa oculta más con 3 neuronas
+Para mejorar el modelo se agregaron 2 capas ocultas más
 - Para la primera capa se usa la función de activación *relu*
 - Para la segunda capa se usa la función de activación *relu*
-- Para la tercera capa se usa la función de activación *sigmoid*
+- Para la tercera capa se usa la función de activación *relu*
+- Para la cuarta capa se usa la función de activación *sigmoid*
 
 El modelo usa el algoritmo *adam* de optimización y las métricas son *BinaryCrossentropy* y *BinaryAccuracy*, igual que en el modelo anterior para una mejor comparación.
 Se uso el método de *fit* de *tf.keras* con el validation_split de los datos para test y de esta manera poder también calcular el Accuracy y el Loss en test para cada epoch.

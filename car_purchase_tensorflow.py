@@ -4,7 +4,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import confusion_matrix,accuracy_score, roc_auc_score
+from sklearn.metrics import accuracy_score, roc_auc_score
 
 # Limpiar los datos
 car_data = pd.read_csv("car_data.csv", header = 0)
@@ -68,6 +68,7 @@ print("Binary Accuracy Modelo 1: ", accuracy_score(y_test,y_hat))
 # Crear el modelo
 model2 = tf.keras.Sequential()
 model2.add(tf.keras.layers.Dense(units = 2, activation = "relu", input_dim = x_train.shape[1]))
+model2.add(tf.keras.layers.Dense(units = 3, activation = "relu"))
 model2.add(tf.keras.layers.Dense(units = 3, activation = "relu"))
 model2.add(tf.keras.layers.Dense(units = 1, activation = "sigmoid"))
 
